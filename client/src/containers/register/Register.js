@@ -4,8 +4,9 @@ import { Form, Button } from "react-bootstrap";
 import { enrollmentApplication } from "../../services/userService";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Register = () => {
+const Register = (props) => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -63,6 +64,7 @@ const Register = () => {
           setAddress("");
           setMajor("");
           setLocation("");
+          props.saveUserRedux(true);
           navigate("/success");
         }
       } catch (e) {
@@ -83,7 +85,7 @@ const Register = () => {
             className="bg-primary text-center px-5 py-2 fs-4 fw-semibold text-white"
             style={{ borderRadius: "20px 20px 0 0" }}
           >
-            <p>HỌC BỔNG LÊN ĐẾN 400 TRIỆU ĐỒNG</p>
+            <p>SCHOLARSHIP UP TO 400 MILLION VND</p>
           </div>
 
           <div className="px-3 mt-3">
@@ -92,7 +94,7 @@ const Register = () => {
                 <Form.Control
                   type="text"
                   value={name}
-                  placeholder="Họ và tên"
+                  placeholder="Name"
                   onChange={(event) => setName(event.target.value)}
                 />
               </Form.Group>
@@ -101,7 +103,7 @@ const Register = () => {
                 <Form.Control
                   type="text"
                   value={phoneNumber}
-                  placeholder="Số điện thoại"
+                  placeholder="Phone Number"
                   onChange={(event) => setPhoneNumber(event.target.value)}
                 />
               </Form.Group>
@@ -119,7 +121,7 @@ const Register = () => {
                 <Form.Control
                   type="text"
                   value={school}
-                  placeholder="Bạn học trường nào"
+                  placeholder="Your school"
                   onChange={(event) => setSchool(event.target.value)}
                 />
               </Form.Group>
@@ -128,7 +130,7 @@ const Register = () => {
                 <Form.Control
                   type="text"
                   value={address}
-                  placeholder="Bạn sống tại tỉnh/thành phố nào?"
+                  placeholder="Where are you from ?"
                   onChange={(event) => setAddress(event.target.value)}
                 />
               </Form.Group>
@@ -139,20 +141,20 @@ const Register = () => {
                   aria-label="Default select example"
                   onChange={(event) => setMajor(event.target.value)}
                 >
-                  <option>Chuyên ngành học</option>
-                  <option value="Công nghệ thông tin">
-                    Công nghệ thông tin
+                  <option>Major</option>
+                  <option value="information technology">
+                    information technology
                   </option>
-                  <option value="Thiết kế đồ họa">Thiết kế đồ họa</option>
-                  <option value="Quản trị kinh doanh">
-                    Quản trị kinh doanh
+                  <option value="Graphic design">Graphic design</option>
+                  <option value="Business Administration">
+                    Business Administration
                   </option>
-                  <option value="Quản trị marketing">Quản trị marketing</option>
-                  <option value="Quản trị truyền thông">
-                    Quản trị truyền thông
+                  <option value="Marketing manager">Marketing manager</option>
+                  <option value="Media Management">Media Management</option>
+                  <option value="Event Management">Event Management</option>
+                  <option value="International bussiness">
+                    International bussiness
                   </option>
-                  <option value="Quản trị sự kiện">Quản trị sự kiện</option>
-                  <option value="Kinh doanh quốc tế">Kinh doanh quốc tế</option>
                 </Form.Select>
               </Form.Group>
 
@@ -162,7 +164,7 @@ const Register = () => {
                   aria-label="Default select example"
                   onChange={(event) => setLocation(event.target.value)}
                 >
-                  <option>Nơi đăng kí xét tuyển</option>
+                  <option>Where to register for admission</option>
                   <option value="Hà Nội">Hà Nội</option>
                   <option value="Thành phố Hồ Chí Minh">
                     Thành phố Hồ Chí Minh
@@ -195,4 +197,17 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    userDataRedux: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveUserRedux: (userData) =>
+      dispatch({ type: "SAVE_USER", payload: userData }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
