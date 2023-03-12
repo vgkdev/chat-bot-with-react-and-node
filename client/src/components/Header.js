@@ -16,11 +16,9 @@ function Header() {
       expand="lg"
     >
       <Container>
-        <Navbar.Brand className="h1 fs-1">
-          <NavLink end to={"/"}>
-            <i className="bi bi-robot p-3"></i>
-            Chat Bot
-          </NavLink>
+        <Navbar.Brand className="h1 fs-1" as={NavLink} end to={"/"}>
+          <i className="bi bi-robot p-3"></i>
+          Chat Bot
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -29,11 +27,22 @@ function Header() {
           id="responsive-navbar-nav"
         >
           <Nav>
-            <Nav.Link className="text-dark fw-semibold" eventKey={1}>
-              <NavLink to={"/chatting"}>Chatting</NavLink>
+            <Nav.Link
+              className="text-dark fw-semibold"
+              eventKey={1}
+              as={NavLink}
+              to={"/chatting"}
+            >
+              Chatting
             </Nav.Link>
-            <Nav.Link className="text-dark fw-semibold" eventKey={2}>
-              <NavLink to={"/courses"}>Courses</NavLink>
+
+            <Nav.Link
+              className="text-dark fw-semibold"
+              eventKey={2}
+              as={NavLink}
+              to={"/register"}
+            >
+              Register
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import Img from "../../assets/tuyensinh.jpg";
 import { Form, Button } from "react-bootstrap";
 import { enrollmentApplication } from "../../services/userService";
+import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
 
-const Courses = () => {
+const Register = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -11,6 +14,10 @@ const Courses = () => {
   const [address, setAddress] = useState("");
   const [major, setMajor] = useState("");
   const [location, setLocation] = useState("");
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleOnClick = async () => {
     console.log(
@@ -46,7 +53,18 @@ const Courses = () => {
           location,
         });
 
-        console.log("check response: ", response);
+        console.log("check response: ", response.data.errCode);
+
+        if (response.data.errCode === 0) {
+          setName("");
+          setPhoneNumber("");
+          setEmail("");
+          setSchool("");
+          setAddress("");
+          setMajor("");
+          setLocation("");
+          navigate("/success");
+        }
       } catch (e) {
         console.log(">>>onClick: ", e);
       }
@@ -161,8 +179,20 @@ const Courses = () => {
           </div>
         </div>
       </div>
+
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header>
+          <Modal.Title>Chúc mừng bạn đăng kí thành công</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
 
-export default Courses;
+export default Register;

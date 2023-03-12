@@ -4,11 +4,12 @@ import HomePage from "./containers/Home/HomePage";
 import Header from "./components/Header";
 import Footer from "./containers/footer/Footer";
 import Chatting from "./containers/Chat/Chatting";
-import Courses from "./containers/courses/Courses";
+import Register from "./containers/register/Register";
+import Success from "./containers/success/Success";
 
 function App() {
   return (
-    <div className="App container-fluid">
+    <div className="App container-fluid m-0">
       <BrowserRouter>
         <Header />
         <Routes>
@@ -16,10 +17,12 @@ function App() {
 
           <Route path="/chatting" element={<Chatting />} />
 
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route path="/success" element={<Success />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
