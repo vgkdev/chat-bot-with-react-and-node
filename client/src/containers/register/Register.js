@@ -16,6 +16,7 @@ const Register = (props) => {
   const [major, setMajor] = useState("");
   const [location, setLocation] = useState("");
   const [show, setShow] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,6 +43,7 @@ const Register = (props) => {
       !location
     ) {
       console.log("missing parameters");
+      setErrMessage("Nhập thiếu thông tin !");
     } else {
       try {
         const response = await enrollmentApplication({
@@ -54,7 +56,7 @@ const Register = (props) => {
           location,
         });
 
-        console.log("check response: ", response.data.errCode);
+        console.log("check response: ", response.data);
 
         if (response.data.errCode === 0) {
           setName("");
@@ -64,8 +66,11 @@ const Register = (props) => {
           setAddress("");
           setMajor("");
           setLocation("");
+          setErrMessage("");
           props.saveUserRedux(true);
           navigate("/success");
+        } else {
+          setErrMessage("Email đã tồn tại, bạn hãy nhập một email khác !");
         }
       } catch (e) {
         console.log(">>>onClick: ", e);
@@ -177,6 +182,7 @@ const Register = (props) => {
               <Button variant="primary" onClick={handleOnClick}>
                 Submit
               </Button>
+              <div className="mt-4 text-danger fs-6">{errMessage}</div>
             </Form>
           </div>
         </div>
